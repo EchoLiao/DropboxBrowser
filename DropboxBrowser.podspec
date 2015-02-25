@@ -10,4 +10,5 @@ Pod::Spec.new do |s|
   s.requires_arc = true
   s.source_files = '*.{h,m}'
   s.resources    = 'DropboxMedia.xcassets/**/*.png'
+  s.dependency 'Dropbox-iOS-SDK', '~> 1.3.13'
 end

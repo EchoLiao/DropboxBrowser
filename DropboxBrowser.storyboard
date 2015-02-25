@@ -4,19 +4,33 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
     </dependencies>
     <scenes>
-        <!--Table View Controller-->
+        <!--Dropbox-->
         <scene sceneID="p3p-Ai-KgZ">
             <objects>
-                <tableViewController id="ihI-N0-X77" sceneMemberID="viewController">
+                <tableViewController id="ihI-N0-X77" customClass="DropboxBrowserViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="FIT-zR-VsI">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="DropboxBrowserCell" id="poK-Og-abi">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="DropboxBrowserCell" textLabel="rSV-Lb-4Db" detailTextLabel="A4L-Pw-LJU" style="IBUITableViewCellStyleSubtitle" id="poK-Og-abi">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="poK-Og-abi" id="lAg-LI-JYx">
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="rSV-Lb-4Db">
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="A4L-Pw-LJU">
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
                                 </tableViewCellContentView>
                             </tableViewCell>
                         </prototypes>
@@ -25,7 +39,7 @@
                             <outlet property="delegate" destination="ihI-N0-X77" id="Kz4-zU-Uaj"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="694-KJ-3Qk"/>
+                    <navigationItem key="navigationItem" title="Dropbox" id="694-KJ-3Qk"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nar-jp-eQu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

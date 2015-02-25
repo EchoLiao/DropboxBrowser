@@ -9,6 +9,6 @@ Pod::Spec.new do |s|
   s.license      = { :type => "MIT", :file => "LICENSE" }
   s.requires_arc = true
   s.source_files = '*.{h,m}'
-  s.resources    = 'DropboxMedia.xcassets/**/*.png'
+  s.resources    = 'DropboxMedia.xcassets/**/*.png', '*.storyboard'
   s.dependency 'Dropbox-iOS-SDK', '~> 1.3.13'
 end

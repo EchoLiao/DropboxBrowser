@@ -40,7 +40,7 @@
     #import <QuartzCore/QuartzCore.h>
 #endif
 
-#import <DropboxSDK/DropboxSDK.h>
+#import <DropboxSDK.h>
 
 // Ensure that the build is for iOS 6.0 or higher
 #ifndef __IPHONE_6_0

@@ -156,11 +156,7 @@ static NSUInteger const kDBSignOutAlertViewTag = 3;
         CGFloat widthBoundary = self.navigationController.navigationBar.bounds.size.width;
         CGFloat heigthBoundary = newProgressView.bounds.size.height;
         newProgressView.frame = CGRectMake(0, yOrigin, widthBoundary, heigthBoundary);
-        
         newProgressView.alpha = 0.0;
-        newProgressView.tintColor = [UIColor colorWithRed:0.0/255.0f green:122.0/255.0f blue:255.0/255.0f alpha:1.0f];
-        newProgressView.trackTintColor = [UIColor lightGrayColor];
-        
         [self.navigationController.navigationBar addSubview:newProgressView];
         [self setDownloadProgressView:newProgressView];
     } else {
@@ -170,11 +166,7 @@ static NSUInteger const kDBSignOutAlertViewTag = 3;
         CGFloat widthBoundary = self.navigationController.navigationBar.bounds.size.width;
         CGFloat heigthBoundary = newProgressView.bounds.size.height;
         newProgressView.frame = CGRectMake(0, yOrigin, widthBoundary, heigthBoundary);
-        
         newProgressView.alpha = 0.0;
-        newProgressView.tintColor = [UIColor colorWithRed:0.0/255.0f green:122.0/255.0f blue:255.0/255.0f alpha:1.0f];
-        newProgressView.trackTintColor = [UIColor lightGrayColor];
-        
         [self.navigationController.navigationBar addSubview:newProgressView];
         [self setDownloadProgressView:newProgressView];
     }
@@ -182,7 +174,6 @@ static NSUInteger const kDBSignOutAlertViewTag = 3;
     // Add a refresh control, pull down to refresh
     if ([UIRefreshControl class]) {
         UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
-        refreshControl.tintColor = [UIColor colorWithRed:0.0/255.0f green:122.0/255.0f blue:255.0/255.0f alpha:1.0f];
         [refreshControl addTarget:self action:@selector(updateContent) forControlEvents:UIControlEventValueChanged];
         self.refreshControl = refreshControl;
     }

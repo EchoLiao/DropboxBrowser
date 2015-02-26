@@ -28,6 +28,7 @@
 //
 //
 
+#import <UIAlertView+Blocks/UIAlertView+Blocks.h>
 #import "DropboxBrowserViewController.h"
 
 // Check for ARC
@@ -72,6 +73,24 @@ static NSUInteger const kDBSignOutAlertViewTag = 3;
 @end
 
 @implementation DropboxBrowserViewController
+
++ (void)setupDropboxWithAppKey:(NSString *)key appSecret:(NSString *)secret root:(NSString *)root
+{
+    DBSession *session = [[DBSession alloc] initWithAppKey:key appSecret:secret root:root];
+    session.delegate = self;
+    [DBSession setSharedSession:session];
+}
+
++ (BOOL)handleOpenURL:(NSURL *)url
+{
+    if ([[DBSession sharedSession] handleOpenURL:url]) {
+        if ([[DBSession sharedSession] isLinked]) {
+            NSLog(@"Dropbox app linked successfully!");
+        }
+        return YES;
+    }
+    return NO;
+}
 
 //------------------------------------------------------------------------------------------------------------//
 //------- View Lifecycle -------------------------------------------------------------------------------------//
@@ -716,6 +735,21 @@ static NSUInteger const kDBSignOutAlertViewTag = 3;
         [self.rootViewDelegate dropboxBrowser:self failedLoadingShareLinkWithError:error];
 #pragma clang diagnostic pop
     }
+}
+
+#pragma mark - DBSessionDelegate
+
++ (void)sessionDidReceiveAuthorizationFailure:(DBSession*)session userId:(NSString *)userId
+{
+    NSString *title = NSLocalizedString(@"Dropbox Session Ended", nil);
+    NSString *messag = NSLocalizedString(@"Do you want to relink?", nil);
+    NSString *cancel = NSLocalizedString(@"Cancel", nil);
+    NSString *relink = NSLocalizedString(@"Relink", nil);
+    [UIAlertView showWithTitle:title message:messag cancelButtonTitle:cancel otherButtonTitles:@[relink] tapBlock:^(UIAlertView *alertView, NSInteger buttonIndex) {
+        if (buttonIndex != alertView.cancelButtonIndex) {
+            [[DBSession sharedSession] linkUserId:userId fromController:nil];
+        }
+    }];
 }
 
 //------------------------------------------------------------------------------------------------------------//

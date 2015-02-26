@@ -70,6 +70,9 @@ typedef NS_ENUM(NSInteger, kDBFileConflictError) {
 /// A Dropbox file browser, downloader, and conflict manager. Uses the DropboxSDK to display a user's Dropbox files.
 NS_CLASS_AVAILABLE_IOS(6_0) @interface DropboxBrowserViewController : UITableViewController <UISearchBarDelegate, UISearchDisplayDelegate, UIAlertViewDelegate>
 
++ (void)setupDropboxWithAppKey:(NSString *)key appSecret:(NSString *)secret root:(NSString *)root;
+
++ (BOOL)handleOpenURL:(NSURL *)url;
 
 - (instancetype)init;
 

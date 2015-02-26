@@ -28,6 +28,7 @@
 //
 //
 
+#import <SGNavigationProgress/UINavigationController+SGProgress.h>
 #import <UIAlertView+Blocks/UIAlertView+Blocks.h>
 #import "DropboxBrowserViewController.h"
 
@@ -45,8 +46,6 @@ static NSUInteger const kFileExistsAlertViewTag = 2;
 static NSUInteger const kDBSignOutAlertViewTag = 3;
 
 @interface DropboxBrowserViewController () <DBRestClientDelegate>
-
-@property (nonatomic, strong, readwrite) UIProgressView *downloadProgressView;
 
 @property (nonatomic, strong, readwrite) NSString *currentFileName;
 @property (nonatomic, strong, readwrite) NSString *currentPath;
@@ -155,30 +154,7 @@ static NSUInteger const kDBSignOutAlertViewTag = 3;
         searchController.delegate = self;
         self.tableView.contentOffset = CGPointMake(0, self.searchDisplayController.searchBar.frame.size.height);
     }
-    
-    // Add Download Progress View to Navigation Bar
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-        // The user is on an iPad - Add progressview
-        UIProgressView *newProgressView = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleBar];
-        CGFloat yOrigin = self.navigationController.navigationBar.bounds.size.height-newProgressView.bounds.size.height;
-        CGFloat widthBoundary = self.navigationController.navigationBar.bounds.size.width;
-        CGFloat heigthBoundary = newProgressView.bounds.size.height;
-        newProgressView.frame = CGRectMake(0, yOrigin, widthBoundary, heigthBoundary);
-        newProgressView.alpha = 0.0;
-        [self.navigationController.navigationBar addSubview:newProgressView];
-        [self setDownloadProgressView:newProgressView];
-    } else {
-        // The user is on an iPhone / iPod Touch - Add progressview
-        UIProgressView *newProgressView = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleBar];
-        CGFloat yOrigin = self.navigationController.navigationBar.bounds.size.height-newProgressView.bounds.size.height;
-        CGFloat widthBoundary = self.navigationController.navigationBar.bounds.size.width;
-        CGFloat heigthBoundary = newProgressView.bounds.size.height;
-        newProgressView.frame = CGRectMake(0, yOrigin, widthBoundary, heigthBoundary);
-        newProgressView.alpha = 0.0;
-        [self.navigationController.navigationBar addSubview:newProgressView];
-        [self setDownloadProgressView:newProgressView];
-    }
-    
+
     // Add a refresh control, pull down to refresh
     if ([UIRefreshControl class]) {
         UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
@@ -464,10 +440,10 @@ static NSUInteger const kDBSignOutAlertViewTag = 3;
 
 - (void)downloadedFile {
     self.tableView.userInteractionEnabled = YES;
-    
+
+    [self.navigationController cancelSGProgress];
     [UIView animateWithDuration:0.75 animations:^{
         self.tableView.alpha = 1.0;
-        self.downloadProgressView.alpha = 0.0;
     }];
     
     [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
@@ -500,18 +476,15 @@ static NSUInteger const kDBSignOutAlertViewTag = 3;
 }
 
 - (void)startDownloadFile {
-    [self.downloadProgressView setProgress:0.0];
-    [UIView animateWithDuration:0.75 animations:^{
-        self.downloadProgressView.alpha = 1.0;
-    }];
+    [self.navigationController setSGProgressPercentage:0 andTintColor:[UIProgressView appearance].tintColor];
 }
 
 - (void)downloadedFileFailed {
     self.tableView.userInteractionEnabled = YES;
-    
+
+    [self.navigationController cancelSGProgress];
     [UIView animateWithDuration:0.75 animations:^{
         self.tableView.alpha = 1.0;
-        self.downloadProgressView.alpha = 0.0;
     }];
     
     self.navigationItem.title = [self.currentPath lastPathComponent];
@@ -541,7 +514,7 @@ static NSUInteger const kDBSignOutAlertViewTag = 3;
 }
 
 - (void)updateDownloadProgressTo:(CGFloat)progress {
-    [self.downloadProgressView setProgress:progress];
+    [self.navigationController setSGProgressPercentage:progress * 100 andTintColor:[UIProgressView appearance].tintColor];
 }
 
 //------------------------------------------------------------------------------------------------------------//

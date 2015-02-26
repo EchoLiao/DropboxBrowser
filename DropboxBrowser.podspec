@@ -13,5 +13,5 @@ Pod::Spec.new do |s|
   s.resources    = 'DropboxMedia.xcassets/**/*.png', '*.storyboard'
   s.dependency 'Dropbox-iOS-SDK', '~> 1.3.13'
   s.dependency 'UIAlertView+Blocks', '~> 0.8.1'
-  s.dependency 'SGNavigationProgress+Blocks', '~> 1.2.101'
+  s.dependency 'SGNavigationProgress', '~> 1.2.101'
 end

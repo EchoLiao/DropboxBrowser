@@ -37,6 +37,8 @@
     #error DropboxBrowser is built with Objective-C ARC. You must enable ARC for DropboxBrowser.
 #endif
 
+static NSString *kNotificationUpdateRootContent = @"NotificationUpdateRootContent";
+
 // View tags to differeniate alert views
 static NSUInteger const kDBSignInAlertViewTag = 1;
 static NSUInteger const kFileExistsAlertViewTag = 2;
@@ -86,6 +88,7 @@ static NSUInteger const kDBSignOutAlertViewTag = 3;
     if ([[DBSession sharedSession] handleOpenURL:url]) {
         if ([[DBSession sharedSession] isLinked]) {
             NSLog(@"Dropbox app linked successfully!");
+            [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationUpdateRootContent object:nil];
         }
         return YES;
     }
@@ -96,6 +99,11 @@ static NSUInteger const kDBSignOutAlertViewTag = 3;
 //------- View Lifecycle -------------------------------------------------------------------------------------//
 //------------------------------------------------------------------------------------------------------------//
 #pragma mark  - View Lifecycle
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 
 - (instancetype)init {
 	self = [super init];
@@ -182,6 +190,7 @@ static NSUInteger const kDBSignOutAlertViewTag = 3;
     // Initialize Directory Content
     if ([self.currentPath isEqualToString:@"/"]) {
         [self listDirectoryAtPath:@"/"];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateRootDirectoryContent) name:kNotificationUpdateRootContent object:nil];
     }
 }
 
@@ -425,6 +434,15 @@ static NSUInteger const kDBSignOutAlertViewTag = 3;
     [self listDirectoryAtPath:self.currentPath];
 }
 
+- (void)updateRootDirectoryContent {
+    if ([self.currentPath isEqualToString:@"/"] && ![self.refreshControl isRefreshing]) {
+        [self beginRefreshControl:-self.refreshControl.frame.size.height * 2.0];
+        if ([self isDropboxLinked]) {
+            [[self restClient] loadMetadata:@"/"];
+        }
+    }
+}
+
 //------------------------------------------------------------------------------------------------------------//
 //------- DataController Delegate ----------------------------------------------------------------------------//
 //------------------------------------------------------------------------------------------------------------//
@@ -524,10 +542,14 @@ static NSUInteger const kDBSignOutAlertViewTag = 3;
 //------------------------------------------------------------------------------------------------------------//
 #pragma mark - Dropbox File and Directory Functions
 
-- (BOOL)listDirectoryAtPath:(NSString *)path {
+- (void)beginRefreshControl:(NSInteger)yoffset {
     [self.refreshControl endRefreshing];
-    [self.tableView setContentOffset:CGPointMake(0, -self.refreshControl.frame.size.height) animated:YES];
+    [self.tableView setContentOffset:CGPointMake(0, yoffset) animated:YES];
     [self.refreshControl beginRefreshing];
+}
+
+- (BOOL)listDirectoryAtPath:(NSString *)path {
+    [self beginRefreshControl:-self.refreshControl.frame.size.height];
     if ([self isDropboxLinked]) {
         [[self restClient] loadMetadata:path];
         return YES;

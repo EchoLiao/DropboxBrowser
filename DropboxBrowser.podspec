@@ -12,4 +12,5 @@ Pod::Spec.new do |s|
   s.source_files = '*.{h,m}'
   s.resources    = 'DropboxMedia.xcassets/**/*.png', '*.storyboard'
   s.dependency 'Dropbox-iOS-SDK', '~> 1.3.13'
+  s.dependency 'UIAlertView+Blocks', '~> 0.8.1'
 end

@@ -324,8 +324,15 @@ static NSUInteger const kDBSignOutAlertViewTag = 3;
                 [self.rootViewDelegate dropboxBrowser:self selectedFile:self.selectedFile];
 #pragma clang diagnostic pop
             } else {
-                // Download file
-                [self downloadFile:self.selectedFile replaceLocalVersion:NO];
+                NSString *title = NSLocalizedString(@"Downlowd", nil);
+                NSString *cancel = NSLocalizedString(@"Cancel", nil);
+                NSString *messag = [NSString stringWithFormat:@"Do you want to download file %@ from Dropbox?", self.selectedFile.filename];
+                messag = NSLocalizedString(messag, nil);
+                [UIAlertView showWithTitle:title message:messag cancelButtonTitle:cancel otherButtonTitles:@[title] tapBlock:^(UIAlertView *alertView, NSInteger buttonIndex) {
+                    if (buttonIndex != alertView.cancelButtonIndex) {
+                        [self downloadFile:self.selectedFile replaceLocalVersion:NO];
+                    }
+                }];
             }
         }
         

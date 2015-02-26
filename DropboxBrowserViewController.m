@@ -175,6 +175,7 @@ static NSUInteger const kDBSignOutAlertViewTag = 3;
     if ([UIRefreshControl class]) {
         UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
         [refreshControl addTarget:self action:@selector(updateContent) forControlEvents:UIControlEventValueChanged];
+        refreshControl.tintColor = [UIRefreshControl appearance].tintColor;
         self.refreshControl = refreshControl;
     }
     
@@ -243,7 +244,7 @@ static NSUInteger const kDBSignOutAlertViewTag = 3;
         // Create the table view cell
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:self.tableCellID];
         if (cell == nil) {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"DropboxBrowserCell"];
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:self.tableCellID];
         }
         
         // Configure the Dropbox Data for the cell
@@ -416,7 +417,6 @@ static NSUInteger const kDBSignOutAlertViewTag = 3;
 
 - (void)updateTableData {
     [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
-    
     [self.tableView reloadData];
     [self.refreshControl endRefreshing];
 }
@@ -525,6 +525,9 @@ static NSUInteger const kDBSignOutAlertViewTag = 3;
 #pragma mark - Dropbox File and Directory Functions
 
 - (BOOL)listDirectoryAtPath:(NSString *)path {
+    [self.refreshControl endRefreshing];
+    [self.tableView setContentOffset:CGPointMake(0, -self.refreshControl.frame.size.height) animated:YES];
+    [self.refreshControl beginRefreshing];
     if ([self isDropboxLinked]) {
         [[self restClient] loadMetadata:path];
         return YES;

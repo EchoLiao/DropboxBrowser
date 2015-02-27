@@ -679,7 +679,7 @@ static NSUInteger const kDBSignOutAlertViewTag = 3;
         for (DBMetadata *file in metadata.contents) {
             if (![file.filename hasSuffix:@".exe"]) {
                 // Add to list if not '.exe' and either the file is a directory, there are no allowed files set or the file ext is contained in the allowed types
-                if ([file isDirectory] || self.allowedFileTypes.count == 0 || [self.allowedFileTypes containsObject:[file.filename pathExtension]] ) {
+                if ([file isDirectory] || self.allowedFileTypes.count == 0 || [self.allowedFileTypes containsObject:[file.filename pathExtension].lowercaseString] ) {
                     [dirList addObject:file];
                 }
             }

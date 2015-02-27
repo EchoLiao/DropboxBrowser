@@ -451,7 +451,7 @@ static NSUInteger const kDBSignOutAlertViewTag = 3;
     [alertView show];
     
     // Deliver File Download Notification
-    if (self.deliverDownloadNotifications == YES) {
+    if (self.deliverDownloadNotifications && [[UIApplication sharedApplication] applicationState] != UIApplicationStateActive) {
         UILocalNotification *localNotification = [[UILocalNotification alloc] init];
         localNotification.alertBody = [NSString stringWithFormat:NSLocalizedString(@"Downloaded %@ from Dropbox", @"DropboxBrowser: Notification Body Text"), self.currentFileName];
         localNotification.soundName = UILocalNotificationDefaultSoundName;
@@ -491,7 +491,7 @@ static NSUInteger const kDBSignOutAlertViewTag = 3;
     [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
     
     // Deliver File Download Notification
-    if (self.deliverDownloadNotifications == YES) {
+    if (self.deliverDownloadNotifications && [[UIApplication sharedApplication] applicationState] != UIApplicationStateActive) {
         UILocalNotification *localNotification = [[UILocalNotification alloc] init];
         localNotification.alertBody = [NSString stringWithFormat:NSLocalizedString(@"Failed to download %@ from Dropbox.", @"DropboxBrowser: Notification Body Text"), self.currentFileName];
         localNotification.soundName = UILocalNotificationDefaultSoundName;

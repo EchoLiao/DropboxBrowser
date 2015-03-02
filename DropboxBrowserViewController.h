@@ -157,6 +157,8 @@ NS_CLASS_AVAILABLE_IOS(6_0) @interface DropboxBrowserViewController : UITableVie
 // Available Methods - Use these delegate methods for a variety of operations and events  //
 //----------------------------------------------------------------------------------------//
 
+- (BOOL)dropboxBrowser:(DropboxBrowserViewController *)browser shouldDownloadFile:(DBMetadata *)file;
+
 /// Sent to the delegate when there is a successful file download
 - (void)dropboxBrowser:(DropboxBrowserViewController *)browser didDownloadFile:(NSString *)fileName didOverwriteFile:(BOOL)isLocalFileOverwritten;
 

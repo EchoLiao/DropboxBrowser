@@ -40,7 +40,7 @@
     #import <QuartzCore/QuartzCore.h>
 #endif
 
-#import <DropboxSDK.h>
+#import "DropboxSDK.h"
 
 // Ensure that the build is for iOS 6.0 or higher
 #ifndef __IPHONE_6_0
@@ -115,7 +115,7 @@ NS_CLASS_AVAILABLE_IOS(6_0) @interface DropboxBrowserViewController : UITableVie
  @return YES if the current app is linked to Dropbox with a valid API Key, Secret, and User Account. NO if one or more of the API Key, Secret, or User Account is not valid. */
 - (BOOL)isDropboxLinked;
 
-/** Force a content update of the current directory. 
+/** Force a content update of the current directory.
  @discussion This is usually not necessary because the DropboxSDK will asynchronously update content. Additionally, the DropboxBrowser supplies a Refresh Control to allow the user to force an update. However, there may be points when it is useful to force a content update of the current directory. */
 - (void)updateContent;
 
@@ -125,7 +125,7 @@ NS_CLASS_AVAILABLE_IOS(6_0) @interface DropboxBrowserViewController : UITableVie
  @return YES if the download is successful. NO if the download fails. */
 - (BOOL)downloadFile:(DBMetadata *)file replaceLocalVersion:(BOOL)replaceLocalVersion;
 
-/** Create a share link for a specifc file. 
+/** Create a share link for a specifc file.
  @param file File metadata from dropbox. A DBMetadata object is supplied from the \p dropboxBrowser:didSelectFile: and file conflict delegate methods. */
 - (void)loadShareLinkForFile:(DBMetadata *)file;
 

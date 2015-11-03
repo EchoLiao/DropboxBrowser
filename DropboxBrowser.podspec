@@ -8,7 +8,7 @@ Pod::Spec.new do |s|
   s.platform     = :ios, '7.0'
   s.license      = { :type => "MIT", :file => "LICENSE" }
   s.requires_arc = true
-  s.xcconfig     = { 'HEADER_SEARCH_PATHS' => "\"${PODS_ROOT}/Dropbox-iOS-SDK/dropbox-ios-1.3.13/DropboxSDK/Classes\"" } # FIXME: CocoaPods Bug
+  s.xcconfig     = { 'HEADER_SEARCH_PATHS' => "\"${PODS_ROOT}/Dropbox-iOS-SDK/dropbox-ios-sdk-1.3.13/DropboxSDK.framework/Headers\"" } # FIXME: CocoaPods Bug
   s.source_files = '*.{h,m}'
   s.resources    = 'DropboxMedia.xcassets/**/*.png', '*.storyboard'
   s.dependency 'Dropbox-iOS-SDK', '~> 1.3.13'

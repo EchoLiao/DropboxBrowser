@@ -148,10 +148,10 @@ static NSUInteger const kDBSignOutAlertViewTag = 3;
         self.tableView.tableHeaderView = searchBar;
         
         // Setup Search Controller
-        UISearchDisplayController *searchController = [[UISearchDisplayController alloc] initWithSearchBar:searchBar contentsController:self];
-        searchController.searchResultsDataSource = self;
-        searchController.searchResultsDelegate = self;
-        searchController.delegate = self;
+//        UISearchDisplayController *searchController = [[UISearchDisplayController alloc] initWithSearchBar:searchBar contentsController:self];
+//        searchController.searchResultsDataSource = self;
+//        searchController.searchResultsDelegate = self;
+//        searchController.delegate = self;
         self.tableView.contentOffset = CGPointMake(0, self.searchDisplayController.searchBar.frame.size.height);
     }
 

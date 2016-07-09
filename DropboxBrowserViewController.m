@@ -208,40 +208,21 @@ static NSUInteger const kDBSignOutAlertViewTag = 3;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell = nil;
+
     if ([self.fileList count] == 0) {
         // There are no files in the directory - let the user know
         if (indexPath.row == 1) {
-            UITableViewCell *cell = [[UITableViewCell alloc] init];
-            
+            cell = [[UITableViewCell alloc] init];
             if (self.isSearching == YES) {
                 cell.textLabel.text = NSLocalizedString(@"No Search Results", @"DropboxBrowser: Empty Search Results Text");
             } else {
                 cell.textLabel.text = NSLocalizedString(@"Folder is Empty", @"DropboxBroswer: Empty Folder Text");
             }
-
-            if (self.cellBackgroundColor) {
-                cell.backgroundColor = self.cellBackgroundColor;
-            }
-            if (self.cellSelectedBackgroundView) {
-                cell.selectedBackgroundView = self.cellSelectedBackgroundView;
-            }
-            if (self.cellSelectedBackgroundViewColor) {
-                cell.selectedBackgroundView.backgroundColor = self.cellSelectedBackgroundViewColor;
-            }
-            if (self.textColor) {
-                cell.textLabel.textColor = self.textColor;
-            }
-            if (self.detailTextColor) {
-                cell.detailTextLabel.textColor = self.detailTextColor;
-            }
-            
             cell.textLabel.textAlignment = NSTextAlignmentCenter;
             cell.textLabel.textColor = [UIColor darkGrayColor];
-            
-            return cell;
         } else {
-            UITableViewCell *cell = [[UITableViewCell alloc] init];
-            return cell;
+            cell = [[UITableViewCell alloc] init];
         }
     } else {
         // Check if the table cell ID has been set, otherwise create one
@@ -250,7 +231,7 @@ static NSUInteger const kDBSignOutAlertViewTag = 3;
         }
         
         // Create the table view cell
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:self.tableCellID];
+        cell = [tableView dequeueReusableCellWithIdentifier:self.tableCellID];
         if (cell == nil) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:self.tableCellID];
         }
@@ -282,25 +263,25 @@ static NSUInteger const kDBSignOutAlertViewTag = 3;
             cell.detailTextLabel.text = [NSString stringWithFormat:NSLocalizedString(@"%@, modified %@", @"DropboxBrowser: File detail label with the file size and modified date."), file.humanReadableSize, [formatter stringFromDate:file.lastModifiedDate]];
             [cell.detailTextLabel setNeedsDisplay];
         }
-
-        if (self.cellBackgroundColor) {
-            cell.backgroundColor = self.cellBackgroundColor;
-        }
-        if (self.cellSelectedBackgroundView) {
-            cell.selectedBackgroundView = self.cellSelectedBackgroundView;
-        }
-        if (self.cellSelectedBackgroundViewColor) {
-            cell.selectedBackgroundView.backgroundColor = self.cellSelectedBackgroundViewColor;
-        }
-        if (self.textColor) {
-            cell.textLabel.textColor = self.textColor;
-        }
-        if (self.detailTextColor) {
-            cell.detailTextLabel.textColor = self.detailTextColor;
-        }
-
-        return cell;
     }
+    
+    if (self.cellBackgroundColor) {
+        cell.backgroundColor = self.cellBackgroundColor;
+    }
+    if (self.cellSelectedBackgroundView) {
+        cell.selectedBackgroundView = self.cellSelectedBackgroundView;
+    }
+    if (self.cellSelectedBackgroundViewColor) {
+        cell.selectedBackgroundView.backgroundColor = self.cellSelectedBackgroundViewColor;
+    }
+    if (self.textColor) {
+        cell.textLabel.textColor = self.textColor;
+    }
+    if (self.detailTextColor) {
+        cell.detailTextLabel.textColor = self.detailTextColor;
+    }
+    
+    return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

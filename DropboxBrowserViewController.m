@@ -168,6 +168,13 @@ static NSUInteger const kDBSignOutAlertViewTag = 3;
         [self listDirectoryAtPath:@"/"];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateRootDirectoryContent) name:kNotificationUpdateRootContent object:nil];
     }
+
+    if (self.backgroundColor) {
+        self.tableView.backgroundColor = self.backgroundColor;
+    }
+    if (self.separatorColor) {
+        self.tableView.separatorColor = self.separatorColor;
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -260,6 +267,15 @@ static NSUInteger const kDBSignOutAlertViewTag = 3;
             [cell.detailTextLabel setNeedsDisplay];
         }
 
+        if (self.cellBackgroundColor) {
+            cell.backgroundColor = self.cellBackgroundColor;
+        }
+        if (self.cellSelectedBackgroundView) {
+            cell.selectedBackgroundView = self.cellSelectedBackgroundView;
+        }
+        if (self.cellSelectedBackgroundViewColor) {
+            cell.selectedBackgroundView.backgroundColor = self.cellSelectedBackgroundViewColor;
+        }
         if (self.textColor) {
             cell.textLabel.textColor = self.textColor;
         }
@@ -282,6 +298,11 @@ static NSUInteger const kDBSignOutAlertViewTag = 3;
         if ([self.selectedFile isDirectory]) {
             // Create new UITableViewController
             self.subdirectoryController = [[DropboxBrowserViewController alloc] init];
+            self.subdirectoryController.backgroundColor = self.backgroundColor;
+            self.subdirectoryController.separatorColor = self.separatorColor;
+            self.subdirectoryController.cellBackgroundColor = self.cellBackgroundColor;
+            self.subdirectoryController.cellSelectedBackgroundView = self.cellSelectedBackgroundView;
+            self.subdirectoryController.cellSelectedBackgroundViewColor = self.cellSelectedBackgroundViewColor;
             self.subdirectoryController.textColor = self.textColor;
             self.subdirectoryController.detailTextColor = self.detailTextColor;
             self.subdirectoryController.rootViewDelegate = self.rootViewDelegate;

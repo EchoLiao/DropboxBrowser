@@ -218,6 +218,22 @@ static NSUInteger const kDBSignOutAlertViewTag = 3;
             } else {
                 cell.textLabel.text = NSLocalizedString(@"Folder is Empty", @"DropboxBroswer: Empty Folder Text");
             }
+
+            if (self.cellBackgroundColor) {
+                cell.backgroundColor = self.cellBackgroundColor;
+            }
+            if (self.cellSelectedBackgroundView) {
+                cell.selectedBackgroundView = self.cellSelectedBackgroundView;
+            }
+            if (self.cellSelectedBackgroundViewColor) {
+                cell.selectedBackgroundView.backgroundColor = self.cellSelectedBackgroundViewColor;
+            }
+            if (self.textColor) {
+                cell.textLabel.textColor = self.textColor;
+            }
+            if (self.detailTextColor) {
+                cell.detailTextLabel.textColor = self.detailTextColor;
+            }
             
             cell.textLabel.textAlignment = NSTextAlignmentCenter;
             cell.textLabel.textColor = [UIColor darkGrayColor];

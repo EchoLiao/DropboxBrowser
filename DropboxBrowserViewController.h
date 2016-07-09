@@ -78,6 +78,10 @@ NS_CLASS_AVAILABLE_IOS(6_0) @interface DropboxBrowserViewController : UITableVie
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder;
 
+@property (nonatomic, strong) UIColor *textColor;
+
+@property (nonatomic, strong) UIColor *detailTextColor;
+
 
 /// Dropbox Delegate Property
 @property (nonatomic, weak) id <DropboxBrowserDelegate> rootViewDelegate;

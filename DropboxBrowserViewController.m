@@ -259,7 +259,14 @@ static NSUInteger const kDBSignOutAlertViewTag = 3;
             cell.detailTextLabel.text = [NSString stringWithFormat:NSLocalizedString(@"%@, modified %@", @"DropboxBrowser: File detail label with the file size and modified date."), file.humanReadableSize, [formatter stringFromDate:file.lastModifiedDate]];
             [cell.detailTextLabel setNeedsDisplay];
         }
-        
+
+        if (self.textColor) {
+            cell.textLabel.textColor = self.textColor;
+        }
+        if (self.detailTextColor) {
+            cell.detailTextLabel.textColor = self.detailTextColor;
+        }
+
         return cell;
     }
 }
@@ -275,6 +282,8 @@ static NSUInteger const kDBSignOutAlertViewTag = 3;
         if ([self.selectedFile isDirectory]) {
             // Create new UITableViewController
             self.subdirectoryController = [[DropboxBrowserViewController alloc] init];
+            self.subdirectoryController.textColor = self.textColor;
+            self.subdirectoryController.detailTextColor = self.detailTextColor;
             self.subdirectoryController.rootViewDelegate = self.rootViewDelegate;
             NSString *subpath = [self.currentPath stringByAppendingPathComponent:self.selectedFile.filename];
             self.subdirectoryController.currentPath = subpath;
